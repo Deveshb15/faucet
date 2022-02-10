@@ -14,10 +14,10 @@ contract Faucet {
     }
 
     function withdraw() external {
-        require(address(this).balance > 0.1 ether, "This fauce is empty please come back later");
-        require(timeouts[msg.sender] <= block.timestamp - 12 hours, "You can only withdraw funds every 12 hours please come back later");
+        require(address(this).balance > 0.025 ether, "This fauce is empty please come back later");
+        require(timeouts[msg.sender] <= block.timestamp - 24 hours, "You can only withdraw funds every 24 hours please come back later");
 
-        payable(msg.sender).transfer(0.1 ether);
+        payable(msg.sender).transfer(0.025 ether);
         timeouts[msg.sender] = block.timestamp;
 
         emit Withdrawal(msg.sender);
