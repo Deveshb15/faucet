@@ -6,11 +6,11 @@ const main = async () => {
     console.log("Account balance: ", accountBalance.toString());
 
     const faucetContractFactory = await hre.ethers.getContractFactory("Faucet");
-    const faucetContract = await faucetContractFactory.deploy();
+    const faucetContract = await faucetContractFactory.deploy({ value: ethers.utils.parseEther("10") });
     await faucetContract.deployed();
 
     console.log("Contract deployed to:", faucetContract.address);
-    console.log("Contract deployed by:", owner.address);
+    console.log("Contract deployed by:", deployer.address);
 };
 
 const runMain = async () => {

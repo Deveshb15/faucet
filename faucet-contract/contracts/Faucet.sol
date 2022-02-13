@@ -5,6 +5,8 @@ contract Faucet {
 
     address owner;
     mapping(address => uint) timeouts;
+    uint totalLeaks;
+    uint donations;
 
     event Withdrawal(address indexed to);
     event Deposited(address indexed from, uint amount);
@@ -20,7 +22,16 @@ contract Faucet {
         payable(msg.sender).transfer(0.025 ether);
         timeouts[msg.sender] = block.timestamp;
 
+        totalLeaks+=1;
         emit Withdrawal(msg.sender);
+    }
+
+    function getLeaks() public view returns(uint) {
+        return totalLeaks;
+    }
+
+    function getTimestamp() public view returns(uint) {
+        return block.timestamp - timeouts[msg.sender];
     }
 
     receive() payable external {
@@ -28,7 +39,7 @@ contract Faucet {
     }
 
     fallback() external payable {
-    
+        donations+=1;
     }
 
     function destroy() public {
